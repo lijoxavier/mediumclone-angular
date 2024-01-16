@@ -8,6 +8,7 @@ const initialState: AuthStateInterface = {
   isLoading: false,
   currentUser: undefined,
   validationErrors: null,
+  isLoggedIn:false
 }
 const authFeature = createFeature({
   name: 'auth',
@@ -33,16 +34,19 @@ const authFeature = createFeature({
     on(authActions.login,(state)=>({
       ...state,
       isSubmitting:true,
+    
       validationErrors:null
     })),
     on(authActions.loginSuccess,(state,action)=>({
       ...state,
       isSubmitting:false,
+      isLoggedIn:true,
       currentUser:action.currentUser
     })),
     on(authActions.loginFailure,(state,action)=>({
       ...state,
       isSubmitting:false,
+      
       validationErrors:action.errors
     })),
 
@@ -53,6 +57,7 @@ const authFeature = createFeature({
     on(authActions.getCurrentUserSuccess,(state,action)=>({
       ...state,
       isLoading:false,
+      isLoggedIn:true,
       currentUser:action.currentUser
     })),
     on(authActions.getCurrentUserFailure,(state)=>({
@@ -72,4 +77,6 @@ export const {
   selectIsLoading,
   selectCurrentUser,
   selectValidationErrors,
+  selectIsLoggedIn
+  
 } = authFeature
