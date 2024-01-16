@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import { Observable, filter, scan, take, tap } from 'rxjs';
+import { Observable, filter, map, scan, take, tap } from 'rxjs';
 import { selectIsLoggedIn } from '../auth/store/reducer';
 
 @Injectable({
@@ -16,14 +16,16 @@ export class AuthGuard implements CanActivate {
 
     return this.store.pipe(
       select(selectIsLoggedIn),
-      tap((isLoggedIn) => {
+      map((isLoggedIn) => {
         console.log(isLoggedIn)
 
         if (!isLoggedIn) {
           this.route.navigateByUrl('/login')
+          return false
         }
         else{
           this.route.navigateByUrl("/sas")
+          return true
         }
       })
     )
