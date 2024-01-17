@@ -1,6 +1,7 @@
 import { createFeature, createReducer, on } from "@ngrx/store";
 import { FeedStateInterface } from "../types/feedState.interface";
 import { feedActions } from "./actions";
+import { routerNavigationAction } from "@ngrx/router-store";
 
 const initialState:FeedStateInterface = {
     isLoading:false,
@@ -25,8 +26,15 @@ const feedFeature = createFeature({
         on(feedActions.getFeedFailure,(state)=>({
             ...state,
             isLoading:false
-        }))
-
-        //TODO:12:00 video time
+        })),
+        on(routerNavigationAction,()=>initialState)
     )
 })
+
+export const {
+    name:feedFeatureKey,
+    reducer:feedReducer,
+    selectIsLoading,
+    selectError,
+    selectData:selectFeedData
+} = feedFeature
