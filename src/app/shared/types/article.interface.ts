@@ -1,3 +1,5 @@
+import { ProfileInterface } from "../components/feed/types/profile.interface";
+
 export interface ArticleInterface {
     body:string,
     createdAt:string,
@@ -7,7 +9,6 @@ export interface ArticleInterface {
     slug:string,
     tagList:string[],
     title:string,
-    updatedAt:string
-
-    // TODO: Add author interface 
+    updatedAt:string,
+    author:ProfileInterface
 }
