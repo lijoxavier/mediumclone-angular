@@ -10,12 +10,13 @@ import { LoadingComponent } from "../loading/loading.component";
 import { environment } from "src/environments/environment";
 import { PaginationComponent } from "../pagination/pagination.component";
 import queryString from "query-string";
+import { TagListComponent } from "../tagList/tagList.component";
 
 @Component({
     selector: "mc-feed",
     templateUrl: "./feed.component.html",
     standalone: true,
-    imports: [CommonModule, RouterModule, ErrorMessageComponent, LoadingComponent, PaginationComponent]
+    imports: [CommonModule, RouterModule, ErrorMessageComponent, LoadingComponent, PaginationComponent,TagListComponent]
 })
 
 export class FeedComponent implements OnInit {
