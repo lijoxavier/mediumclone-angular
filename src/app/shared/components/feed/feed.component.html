@@ -6,31 +6,33 @@
     *ngIf="data.error"
     [message]="data.error"
   ></mc-error-message>
-  <div class="article-preview" *ngFor="let article of data.feed?.articles">
-    <div class="article-meta">
-      <a [routerLink]="['/profiles', article.author.username]">
-        <img [src]="article.author.image" />
-      </a>
-
-      <div class="info">
+  <div *ngIf="data.feed">
+    <div class="article-preview" *ngFor="let article of data.feed.articles">
+      <div class="article-meta">
         <a [routerLink]="['/profiles', article.author.username]">
-          {{ article.author.username }}
+          <img [src]="article.author.image" />
         </a>
-        <span class="date">{{ article.createdAt }}</span>
+
+        <div class="info">
+          <a [routerLink]="['/profiles', article.author.username]">
+            {{ article.author.username }}
+          </a>
+          <span class="date">{{ article.createdAt }}</span>
+        </div>
+        <div class="pull-xs-right">ADD TO FAVOURITES</div>
       </div>
-      <div class="pull-xs-right">ADD TO FAVOURITES</div>
+      <a [routerLink]="['/articles', article.slug]" class="preview-link">
+        <h1>{{ article.title }}</h1>
+        <p>{{ article.description }}</p>
+        <span>Read More...</span>
+        TAG LIST
+      </a>
     </div>
-    <a [routerLink]="['/articles', article.slug]" class="preview-link">
-      <h1>{{ article.title }}</h1>
-      <p>{{ article.description }}</p>
-      <span>Read More...</span>
-      TAG LIST
-    </a>
-  </div>
-  <mc-pagination
-    [total]="data.feed?.articlesCount || 0"
+    <mc-pagination
+    [total]="data.feed.articlesCount"
     [limit]="limit"
     [url]="baseUrl"
     [currentPage]="currentPage"
-  ></mc-pagination>
+    ></mc-pagination>
+  </div>
 </ng-container>
