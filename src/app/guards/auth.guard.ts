@@ -2,29 +2,44 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { Observable, filter, map, scan, take, tap } from 'rxjs';
-import { selectIsLoggedIn } from '../auth/store/reducer';
+import { selectCurrentUser, selectIsLoggedIn } from '../auth/store/reducer';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private store: Store, private route: Router) {}
+  constructor(private store: Store, private router: Router) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> {
       console.log("canActivate");
 
-    return this.store.pipe(
-      select(selectIsLoggedIn),
-      map((isLoggedIn) => {
-        console.log(isLoggedIn)
+    // return this.store.pipe(
+    //   select(selectIsLoggedIn),
+    //   map((isLoggedIn) => {
+    //     console.log(isLoggedIn)
 
-        if (!isLoggedIn) {
-          this.route.navigateByUrl('/login')
+    //     if (!isLoggedIn) {
+    //       this.route.navigateByUrl('/login')
+    //       return false
+    //     }
+    //     else{
+    //       this.route.navigateByUrl("/sas")
+    //       return true
+    //     }
+    //   })
+    // )
+
+    return this.store.pipe(
+      select(selectCurrentUser),
+      filter((currentUser)=>currentUser!==undefined),
+      map((user)=>{
+        if(!user){
+          this.router.navigateByUrl("/login")
           return false
         }
-        else{
-          this.route.navigateByUrl("/sas")
+        else {
+          this.router.navigateByUrl("/sass")
           return true
         }
       })
