@@ -1,6 +1,11 @@
 <ng-container *ngIf="data$ | async as data">
-  <div *ngIf="data.isLoading">Loading...</div>
-  <div *ngIf="data.error">{{data.error}}</div>
+  <!-- <div *ngIf="data.isLoading">Loading...</div> -->
+  <mc-loading *ngIf="data.isLoading"></mc-loading>
+  <!-- <div *ngIf="data.error">{{data.error}}</div> -->
+  <mc-error-message
+    *ngIf="data.error"
+    [message]="data.error"
+  ></mc-error-message>
   <div class="article-preview" *ngFor="let article of data.feed?.articles">
     <div class="article-meta">
       <a [routerLink]="['/profiles', article.author.username]">
@@ -15,11 +20,11 @@
       </div>
       <div class="pull-xs-right">ADD TO FAVOURITES</div>
     </div>
-    <a [routerLink]="['/articles',article.slug]" class="preview-link">
-        <h1>{{article.title}}</h1>
-        <p>{{article.description}}</p>
-        <span>Read More...</span>
-        TAG LIST
+    <a [routerLink]="['/articles', article.slug]" class="preview-link">
+      <h1>{{ article.title }}</h1>
+      <p>{{ article.description }}</p>
+      <span>Read More...</span>
+      TAG LIST
     </a>
   </div>
   PAGINATION
