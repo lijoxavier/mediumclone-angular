@@ -4,15 +4,17 @@ import { feedActions } from "./store/actions";
 import { combineLatest } from "rxjs";
 import { selectError, selectFeedData, selectIsLoading } from "./store/reducers";
 import { CommonModule } from "@angular/common";
-import { RouterModule } from "@angular/router";
+import { ActivatedRoute, Params, Router, RouterModule } from "@angular/router";
 import { ErrorMessageComponent } from "../errorMessage/errorMessage.component";
 import { LoadingComponent } from "../loading/loading.component";
+import { environment } from "src/environments/environment";
+import { PaginationComponent } from "../pagination/pagination.component";
 
 @Component({
-    selector:"mc-feed",
-    templateUrl:"./feed.component.html",
-    standalone:true,
-    imports:[CommonModule,RouterModule,ErrorMessageComponent,LoadingComponent]
+    selector: "mc-feed",
+    templateUrl: "./feed.component.html",
+    standalone: true,
+    imports: [CommonModule, RouterModule, ErrorMessageComponent, LoadingComponent, PaginationComponent]
 })
 
 export class FeedComponent implements OnInit {
@@ -24,9 +26,16 @@ export class FeedComponent implements OnInit {
         feed:this.store.select(selectFeedData)
     })
 
-    constructor(private store:Store){}
+    limit = environment.limit
+    baseUrl = this.router.url.split("?")[0]
+    currentPage:number = 0
+
+    constructor(private store:Store,private router:Router,private route:ActivatedRoute){}
 
     ngOnInit(): void {
         this.store.dispatch(feedActions.getFeed({url:this.apiUrl}))
+        this.route.queryParams.subscribe((params:Params)=>{
+            this.currentPage = Number(params['page'] || '1')
+        })
     }
 }
