@@ -1,4 +1,4 @@
-import { ProfileInterface } from "../components/feed/types/profile.interface";
+import { ProfileInterface } from "./profile.interface";
 
 export interface ArticleInterface {
     body:string,
