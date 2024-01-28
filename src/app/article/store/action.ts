@@ -6,7 +6,12 @@ export const articleActions = createActionGroup({
     events:{
         'Get article':props<{slug:string}>(),
         'Get article success':props<{article:ArticleInterface}>(),
-        'Get article faliure':emptyProps()
+        'Get article faliure':emptyProps(),
+
+
+        'Delete article':props<{slug:string}>(),
+        'Delete article success':emptyProps(),
+        'Delete article faliure':emptyProps()
     }
 
 })
