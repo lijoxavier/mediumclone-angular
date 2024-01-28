@@ -13,7 +13,7 @@ const articleFeature = createFeature({
     name:"article",
     reducer:createReducer(
         initialState,
-        on(articleActions.getArticle,(state)=>({...state,isLoading:true})),
+        on(articleActions.getArticle,(state,action)=>({...state,isLoading:true})),
         on(articleActions.getArticleSuccess,(state,action)=>({...state,isLoading:false,data:action.article})),
         on(articleActions.getArticleFaliure,(state)=>({...state,isLoading:false})),
         on(routerNavigationAction,()=>initialState)
