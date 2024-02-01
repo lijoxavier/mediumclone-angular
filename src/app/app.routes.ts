@@ -32,5 +32,9 @@ export const appRoutes: Route[] = [
     path:"articles/:slug",
     loadChildren:()=>import("src/app/article/article.route").then((m)=>m.routes)
   },
+  {
+    path:"articles/:slug/edit",
+    loadChildren:()=>import("src/app/editArticle/editArticle.routes").then((m)=>m.routes)
+  }
   
 ]
